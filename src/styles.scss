@@ -1,0 +1,72 @@
+/* You can add global styles to this file, and also import other style files */
+@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&display=swap');
+@import "./assets/styles/variables";
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";
+@import "~bootstrap/scss/reboot";
+@import "~bootstrap/scss/grid";
+@import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/utilities";
+@import "./assets/styles/reset";
+@import "./assets/styles/mixins";
+@import "./assets/styles/animate";
+
+html, body { height: 100%; }
+body { margin: 0; font-family: 'Baloo 2', cursive;}
+
+
+/* Sign in - Sign up */
+.sign {
+  background-image: url('/assets/img/msnbg.jpg');
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.sign__card {
+  margin: 0px auto;
+  width: 90%;
+  max-width: 380px;
+  position: relative;
+  transform: translateY(20%);
+}
+
+.sign .logo {
+  width: 100%;
+  text-align: center;
+  &__img {
+    width: 60%;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .sign .logo {
+    &__img {
+      width: 70%;
+    }
+  }
+}
+
+/* General */
+
+a {
+  text-decoration: none;
+}
+
+.text-color-primary {
+  color: $colorPrimario;
+}
+
+.text-color-secondary {
+  color: $colorSecundario;
+}
+
+.btn {
+  font-size: 1rem;
+}
+
+.card-system {
+  box-shadow: 0px 0px 15px rgba($color: #000, $alpha: 0.5);
+  border-radius: 20px;
+  background-color: #fff;
+}
+

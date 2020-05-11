@@ -1,0 +1,101 @@
+<div class="main">
+  <div class="container card-system mt-5 p-5">
+    <div class="d-flex justify-content-between align-items-center">
+      <h1 class="text-color-primary d-inline-block">Main panel</h1>
+      <button mat-raised-button color="warn" class="btn d-inline-block" (click)="logout()">Logout</button>
+    </div>
+
+    <mat-tab-group>
+      <mat-tab label="Profile">
+        <div *ngIf="!user" class="mt-4 d-flex justify-content-center">
+          <mat-spinner></mat-spinner>
+        </div>
+
+        <div *ngIf="user" class="row mt-4">
+
+          <div class="col-3">
+            <button mat-raised-button [disabled]="!nameImageAvatar" color="accent" class="mb-3 btn d-block"
+              (click)="updateAvatarImage()">Update
+              avatar</button>
+
+            <img *ngIf="user" [src]="croppedImage || user.avatar" alt="avatar" width="100%">
+
+            <input type="file" name="file" (change)="fileChangeEvent($event)" class="w-100">
+            <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1/1"
+              format="png" (imageCropped)="imageCropped($event)">
+            </image-cropper>
+          </div>
+
+          <div class="col-9">
+
+            <form class="w-100" #registerForm="ngForm" (ngSubmit)="updateInformation(registerForm)">
+              <mat-form-field class="w-100">
+                <mat-label>Name</mat-label>
+                <input matInput [(ngModel)]="user.name" type="text" name="name" required>
+                <mat-error *ngIf="registerForm.submitted && registerForm.controls['name'].errors">
+                  <span *ngIf="registerForm.controls['name'].hasError('required')">Name is
+                    <strong>required</strong></span>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-100">
+                <mat-label>Last Name</mat-label>
+                <input matInput [(ngModel)]="user.lastName" type="text" name="lastName" required>
+                <mat-error *ngIf="registerForm.submitted && registerForm.controls['lastName'].errors">
+                  <span *ngIf="registerForm.controls['lastName'].hasError('required')">Last Name is
+                    <strong>required</strong></span>
+                </mat-error>
+              </mat-form-field>
+              <mat-form-field class="w-100">
+                <mat-label>Email</mat-label>
+                <input matInput [(ngModel)]="user.email" type="email" name="email" required email>
+                <mat-error *ngIf="registerForm.submitted && registerForm.controls['email'].errors">
+                  <span *ngIf="registerForm.controls['email'].hasError('required')">Email is
+                    <strong>required</strong></span>
+                  <span *ngIf="registerForm.controls['email'].hasError('email')">Invalid email</span>
+                </mat-error>
+              </mat-form-field>
+
+              <button mat-raised-button color="primary" class="mt-5 mb-3 btn d-block">Update information</button>
+            </form>
+
+          </div>
+
+        </div>
+      </mat-tab>
+      <mat-tab label="Friends">
+        <div class="table-responsive mt-4">
+          <table class="table">
+            <thead>
+              <tr class="bg-primary text-white">
+                <th scope="col">#</th>
+                <th scope="col">Name</th>
+                <th scope="col">Last Name</th>
+                <th scope="col">Email</th>
+                <th scope="col">Chat</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let friend of friends; index as i">
+                <th scope="row">{{i+1}}</th>
+                <td>{{friend.name}}</td>
+                <td>{{friend.lastName}}</td>
+                <td>{{friend.email}}</td>
+                <td class="p-0">
+                  <button mat-icon-button color="accent">
+                    <mat-icon>question_answer</mat-icon>
+                  </button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </mat-tab>
+      <mat-tab label="Third"> Content 3 </mat-tab>
+    </mat-tab-group>
+
+
+
+
+
+  </div>
+</div>

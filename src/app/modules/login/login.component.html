@@ -1,0 +1,41 @@
+<div class="sign">
+  <div class="sign__card card-system p-5 animated fadeIn">
+    <figure class="logo">
+      <img class="logo__img" src="./assets/img/logo.png" alt="">
+    </figure>
+
+    <h2 class="text-center text-color-primary">Sign In</h2>
+
+
+    <form class="w-100" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
+      <mat-form-field class="w-100">
+        <mat-label>Email</mat-label>
+        <input matInput [(ngModel)]="user.email" type="email" name="email" required email>
+        <mat-error *ngIf="loginForm.submitted && loginForm.controls['email'].errors">
+          <span *ngIf="loginForm.controls['email'].hasError('required')">Email is <strong>required</strong></span>
+          <span *ngIf="loginForm.controls['email'].hasError('email')">Invalid email</span>
+        </mat-error>
+      </mat-form-field>
+      <mat-form-field class="w-100">
+        <mat-label>Password</mat-label>
+        <input matInput [(ngModel)]="user.password" type="password" name="password" minlength="6" required>
+        <mat-error *ngIf="loginForm.submitted && loginForm.controls['password'].errors">
+          <span *ngIf="loginForm.controls['password'].hasError('required')">Password is <strong>required</strong></span>
+          <span *ngIf="loginForm.controls['password'].hasError('minlength')">Minimun required: <strong>6
+              characters</strong></span>
+        </mat-error>
+      </mat-form-field>
+
+      <section class="d-flex align-content-center align-items-center">
+        <mat-checkbox (change)="rememberUser = !rememberUser">Remember password</mat-checkbox>
+      </section>
+
+      <button mat-raised-button color="primary" class="mt-5 mb-3 w-100 btn">Login</button>
+    </form>
+
+    <p class="text-center"><a href=""><strong> Forgot your password?</strong> </a></p>
+    <p class="text-center text-secondary">Don't have account?<a routerLink="/register" class="text-color-primary">
+        Register
+        here </a></p>
+  </div>
+</div>
