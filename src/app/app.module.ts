@@ -8,6 +8,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SharedModule } from '@shared/shared.module';
 import { CoreModule } from '@core/core.module';
 import { environment } from 'src/environments/environment';
+import { RequestComponent } from './modules/main/request/request.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 
@@ -21,7 +23,8 @@ import { environment } from 'src/environments/environment';
     BrowserAnimationsModule,
     CoreModule,
     SharedModule,
-    AngularFireModule.initializeApp(environment.firebase)
+    AngularFireModule.initializeApp(environment.firebase),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [],
   bootstrap: [AppComponent]

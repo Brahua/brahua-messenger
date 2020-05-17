@@ -1,5 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-@import url('https://fonts.googleapis.com/css2?family=Baloo+2:wght@400;600;800&display=swap');
 @import "./assets/styles/variables";
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
@@ -7,6 +6,7 @@
 @import "~bootstrap/scss/reboot";
 @import "~bootstrap/scss/grid";
 @import "~bootstrap/scss/tables";
+@import "~bootstrap/scss/images";
 @import "~bootstrap/scss/utilities";
 @import "./assets/styles/reset";
 @import "./assets/styles/mixins";
@@ -70,3 +70,6 @@ a {
   background-color: #fff;
 }
 
+.image-rounded {
+  border-radius: 50%;
+}

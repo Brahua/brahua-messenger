@@ -1,10 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { UsuarioModel } from '@core/models/user.model';
 import { AuthService } from '@core/services/auth/auth.service';
 import Swal from 'sweetalert2';
 import { UserService } from '@core/services/user/user.service';
+import { MessageUtil } from '@core/utils/util';
 
 @Component({
   selector: 'app-login',
@@ -15,6 +16,7 @@ export class LoginComponent implements OnInit {
 
   user: UsuarioModel;
   rememberUser: boolean;
+  installEvent = null;
 
   constructor(
     private authService: AuthService,
@@ -28,17 +30,27 @@ export class LoginComponent implements OnInit {
     this.getRememberUser();
   }
 
+  @HostListener('window:beforeinstallprompt', ['$event'])
+  onBeforeInstallPrompt(event: Event) {
+    console.log(event);
+    event.preventDefault();
+    this.installEvent = event;
+  }
+
+  installByUser() {
+    if (this.installEvent) {
+      this.installEvent.prompt();
+      this.installEvent.userChoice
+        .theb(response => console.log(response));
+    }
+  }
+
   login(loginForm: NgForm) {
     if (loginForm.invalid) {
       return;
     }
 
-    Swal.fire({
-      allowOutsideClick: false,
-      icon: 'info',
-      text: 'Cargando'
-    });
-    Swal.showLoading();
+    MessageUtil.loading();
 
     this.authService.signIn(this.user.email, this.user.password)
       .then(response => {
@@ -47,13 +59,7 @@ export class LoginComponent implements OnInit {
         Swal.close();
         this.router.navigateByUrl('/main');
       })
-      .catch(error => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: error.message
-        });
-      });
+      .catch(error => MessageUtil.error(error.message));
   }
 
   setRememberUser({ email, password }) {

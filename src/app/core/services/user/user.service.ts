@@ -11,8 +11,7 @@ export class UserService {
   userCollection: AngularFirestoreCollection<UsuarioModel>;
 
   constructor(
-    private fireStore: AngularFirestore,
-    private fireStorage: AngularFireStorage
+    private fireStore: AngularFirestore
   ) {
     this.userCollection = this.fireStore.collection('users');
   }
@@ -27,26 +26,22 @@ export class UserService {
   }
 
   getUsers() {
-    return this.userCollection.get()
-      .pipe(
-        map(querySnapshot => {
-          const friends: UsuarioModel[] = [];
-          querySnapshot.forEach((doc) => {
-            friends.push(doc.data());
-          });
-          return friends;
-        })
-      );
+    return this.userCollection.valueChanges();
   }
 
   getUser(id: string) {
-    return this.userCollection.doc(id).get()
-      .pipe(
-        map(resp => resp.data())
-      );
+    return this.userCollection.doc(id).valueChanges();
   }
 
   updateUser(user: UsuarioModel) {
     return this.userCollection.doc(user.id).update({ ...user });
+  }
+
+  addFriend(id: string, idFriend: string) {
+    return this.userCollection.doc(id).collection('friends').doc(idFriend).set({ idFriend });
+  }
+
+  getFriends(id: string) {
+    return this.userCollection.doc(id).collection('friends').valueChanges();
   }
 }

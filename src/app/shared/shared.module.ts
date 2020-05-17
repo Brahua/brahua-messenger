@@ -4,11 +4,12 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { ImageCropperModule } from 'ngx-image-cropper';
+import { UserPipe } from './pipes/user.pipe';
 
 
 
 @NgModule({
-  declarations: [],
+  declarations: [UserPipe],
   imports: [
     CommonModule,
     RouterModule,
@@ -21,7 +22,8 @@ import { ImageCropperModule } from 'ngx-image-cropper';
     RouterModule,
     FormsModule,
     HttpClientModule,
-    ImageCropperModule
+    ImageCropperModule,
+    UserPipe
   ]
 })
 export class SharedModule { }

@@ -1,12 +1,16 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { MainComponent } from './main.component';
+import { ConversationComponent } from './conversation/conversation.component';
 
 
 const routes: Routes = [
   {
     path: '',
-    component: MainComponent
+    component: MainComponent,
+    children: [
+      { path: ':id', component: ConversationComponent }
+    ]
   }
 ];
 

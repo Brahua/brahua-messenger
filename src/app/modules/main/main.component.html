@@ -1,4 +1,4 @@
-<div class="main">
+<div class="main py-3">
   <div class="container card-system mt-5 p-5">
     <div class="d-flex justify-content-between align-items-center">
       <h1 class="text-color-primary d-inline-block">Main panel</h1>
@@ -12,13 +12,14 @@
         </div>
 
         <div *ngIf="user" class="row mt-4">
-
           <div class="col-3">
             <button mat-raised-button [disabled]="!nameImageAvatar" color="accent" class="mb-3 btn d-block"
               (click)="updateAvatarImage()">Update
               avatar</button>
 
-            <img *ngIf="user" [src]="croppedImage || user.avatar" alt="avatar" width="100%">
+            <div class="text-center">
+              <img *ngIf="user" [src]="croppedImage || user.avatar" alt="avatar" class="img-thumbnail">
+            </div>
 
             <input type="file" name="file" (change)="fileChangeEvent($event)" class="w-100">
             <image-cropper [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1/1"
@@ -27,7 +28,6 @@
           </div>
 
           <div class="col-9">
-
             <form class="w-100" #registerForm="ngForm" (ngSubmit)="updateInformation(registerForm)">
               <mat-form-field class="w-100">
                 <mat-label>Name</mat-label>
@@ -54,14 +54,12 @@
                   <span *ngIf="registerForm.controls['email'].hasError('email')">Invalid email</span>
                 </mat-error>
               </mat-form-field>
-
               <button mat-raised-button color="primary" class="mt-5 mb-3 btn d-block">Update information</button>
             </form>
-
           </div>
-
         </div>
       </mat-tab>
+
       <mat-tab label="Friends">
         <div class="table-responsive mt-4">
           <table class="table">
@@ -81,21 +79,31 @@
                 <td>{{friend.lastName}}</td>
                 <td>{{friend.email}}</td>
                 <td class="p-0">
-                  <button mat-icon-button color="accent">
+                  <a [routerLink]=[friend.id] mat-icon-button color="accent">
                     <mat-icon>question_answer</mat-icon>
-                  </button>
+                  </a>
                 </td>
               </tr>
             </tbody>
           </table>
         </div>
       </mat-tab>
-      <mat-tab label="Third"> Content 3 </mat-tab>
+
+      <mat-tab label="Request">
+        <app-request *ngIf="user" [user]="user"></app-request>
+      </mat-tab>
     </mat-tab-group>
+  </div>
 
+  <div class="container card-system my-5 p-5">
+    <div class="row mb-3 justify-content-between align-items-center">
+      <h1 class="text-color-secondary d-inline-block">Conversation</h1>
+      <button mat-mini-fab color="warn" class="btn d-inline-block">
+        <mat-icon>clear</mat-icon>
+      </button>
+    </div>
 
-
-
+    <router-outlet></router-outlet>
 
   </div>
 </div>

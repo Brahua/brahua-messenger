@@ -9,6 +9,7 @@ import { NgForm } from '@angular/forms';
 import Swal from 'sweetalert2';
 import { ImageCroppedEvent } from 'ngx-image-cropper';
 import { MessageUtil } from '@core/utils/util';
+import { switchMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-main',
@@ -18,7 +19,7 @@ import { MessageUtil } from '@core/utils/util';
 export class MainComponent implements OnInit {
 
   user: UsuarioModel;
-  friends: UsuarioModel[];
+  friends: UsuarioModel[] = [];
   imageChangedEvent: any = '';
   nameImageAvatar: string;
   croppedImage: any = '';
@@ -32,10 +33,16 @@ export class MainComponent implements OnInit {
 
   ngOnInit(): void {
     this.authService.currentUser
-      .subscribe(user => this.user = user);
-
-    this.userService.getUsers()
-      .subscribe(friends => this.friends = friends);
+      .pipe(switchMap(user => {
+        console.log('user', user);
+        this.user = user;
+        return this.userService.getFriends(this.user.id);
+      }))
+      .subscribe((friends: any[]) => {
+        friends.forEach(friend => {
+          this.userService.getUser(friend.idFriend).subscribe(user => this.friends.push(user));
+        });
+      }, error => console.log('error', error));
   }
 
   logout() {

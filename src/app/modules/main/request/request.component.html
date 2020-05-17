@@ -1,0 +1,30 @@
+<h3 class="text-color-primary mt-3">Send request to your friend</h3>
+<mat-form-field>
+  <mat-label>Email</mat-label>
+  <input matInput [(ngModel)]="friendEmail" type="text" name="password" minlength="6" required>
+  <!-- <mat-error *ngIf="loginForm.submitted && loginForm.controls['password'].errors">
+    <span *ngIf="loginForm.controls['password'].hasError('required')">Password is <strong>required</strong></span>
+    <span *ngIf="loginForm.controls['password'].hasError('minlength')">Minimun required: <strong>6
+        characters</strong></span>
+  </mat-error> -->
+</mat-form-field>
+
+<button mat-raised-button color="primary" class="mx-3 btn" (click)="sendRequestFriend()">Send request</button>
+
+<h3>Requests</h3>
+<div class="row" *ngIf="requests.length > 0">
+  <div class="col-12" *ngFor="let request of requests">
+    <div *ngIf="((request.sender | user) | async) as user">
+      <p class="d-inline-block mr-3">{{ user.name}} quiere ser tu amigo.
+      </p>
+      <button class="mr-3" mat-raised-button (click)="respondRequest(request, true)" color="accent">Accept</button>
+      <button mat-raised-button (click)="respondRequest(request, false)" color="warn">Denied</button>
+    </div>
+  </div>
+</div>
+
+<div class="row" *ngIf="requests.length === 0">
+  <div class="col-12">
+    <p>There aren't request pendings</p>
+  </div>
+</div>

@@ -4,6 +4,7 @@ import { NgForm } from '@angular/forms';
 import { AuthService } from '@core/services/auth/auth.service';
 import Swal from 'sweetalert2';
 import { UserService } from '@core/services/user/user.service';
+import { MessageUtil } from '@core/utils/util';
 
 @Component({
   selector: 'app-register',
@@ -21,42 +22,21 @@ export class RegisterComponent implements OnInit {
     this.user = new UsuarioModel();
   }
 
-  ngOnInit(): void {
-    this.userService.getUsers();
-  }
+  ngOnInit(): void { }
 
   register(registerForm: NgForm) {
     if (registerForm.invalid) {
       return;
     }
 
-    Swal.fire({
-      allowOutsideClick: false,
-      icon: 'info',
-      text: 'Cargando'
-    });
-    Swal.showLoading();
-
+    MessageUtil.loading();
 
     this.authService.signUp(this.user.email, this.user.password)
       .then(data => {
         this.user.id = data.user.uid;
         return this.userService.addUser(this.user);
       })
-      .then(response => {
-        Swal.close();
-        Swal.fire({
-          icon: 'success',
-          title: 'Operación completada',
-          text: 'Se registró correctamente el usuario',
-        });
-      })
-      .catch(error => {
-        Swal.fire({
-          icon: 'error',
-          title: 'Error',
-          text: error.message
-        });
-      });
+      .then(response => MessageUtil.success('Se registró correctamente el usuario'))
+      .catch(error => MessageUtil.error(error.message));
   }
 }

@@ -3,8 +3,10 @@
     <figure class="logo">
       <img class="logo__img" src="./assets/img/logo.png" alt="">
     </figure>
+    <button type="button" mat-raised-button class="my-3 w-100 btn" (click)="installByUser()"
+      *ngIf="installEvent">Install</button>
 
-    <h2 class="text-center text-color-primary">Sign In</h2>
+    <h2 class="text-center text-color-primary">Iniciar sesion</h2>
 
 
     <form class="w-100" #loginForm="ngForm" (ngSubmit)="login(loginForm)">
@@ -30,7 +32,7 @@
         <mat-checkbox (change)="rememberUser = !rememberUser">Remember password</mat-checkbox>
       </section>
 
-      <button mat-raised-button color="primary" class="mt-5 mb-3 w-100 btn">Login</button>
+      <button type="submit" mat-raised-button color="primary" class="mt-5 mb-3 w-100 btn">Login</button>
     </form>
 
     <p class="text-center"><a href=""><strong> Forgot your password?</strong> </a></p>

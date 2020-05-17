@@ -1,0 +1,33 @@
+<div *ngIf="friend && user">
+  <div class="row" [ngClass]="{'shaker': zumbido}" style="height: 650px;">
+    <div class="col-2 d-flex flex-column justify-content-between">
+      <div class="text-center">
+        <img [src]="friend.avatar" alt="avatar" class="img-thumbnail image-rounded" width="80%">
+      </div>
+      <div class="text-center">
+        <img [src]="user.avatar" alt="avatar" class="img-thumbnail image-rounded" width="80%">
+      </div>
+    </div>
+    <div class="col-10 d-flex flex-column justify-content-between ">
+      <div class="content-conversation mb-3 p-3" id="app-messages">
+        <div *ngFor="let message of messages" class="w-50 my-2 p-3" [ngClass]="{'block-message--friend': message.sender !== user.id,
+                        'block-message': message.sender === user.id,
+                        'offset-6': message.sender === user.id }">
+          <span
+            [ngStyle]="{'font-style': message.type === 'zumbido' ? 'italic' : 'normal'}">{{message.type === 'zumbido' ? 'Se ha enviado un zumbido ' : message.text}}</span>
+          <mat-icon *ngIf="message.type === 'zumbido'">touch_app</mat-icon>
+        </div>
+      </div>
+      <div class="content-input">
+        <button mat-icon-button color="primary" aria-label="zumbido" (click)="sendZumbido()">
+          Zumbido
+          <mat-icon>touch_app</mat-icon>
+        </button>
+        <mat-form-field class="w-100 p-3">
+          <mat-label>Write a message</mat-label>
+          <textarea matInput [(ngModel)]="textMessage" (keyup.enter)="sendMessage($event)"></textarea>
+        </mat-form-field>
+      </div>
+    </div>
+  </div>
+</div>
