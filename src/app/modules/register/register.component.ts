@@ -30,6 +30,7 @@ export class RegisterComponent implements OnInit {
     }
 
     MessageUtil.loading();
+    // Menlo, Monaco, 'Courier New', monospace
 
     this.authService.signUp(this.user.email, this.user.password)
       .then(data => {
